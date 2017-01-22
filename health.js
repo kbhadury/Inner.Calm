@@ -1,18 +1,7 @@
 var main = function(){
-	beenClicked = false;
-	count = 0;
-	enableNotifications = false;
 	
-	$("#mybutton").click(function(){
-		alert("Success!");
-	});
-	
-	$("#addbutton").click(function(){
-		if(!beenClicked){
-			beenClicked = true;
-			setInterval(addItem, 1000*60);
-		}
-	});
+	var enableNotifications = false; //Disable notifications until user presses "start"
+	var interval = 1000*5; //Currently set to 5 seconds for testing
 	
 	$("#notifybutton").click(function(){
 		enableNotifications = !enableNotifications; //Toggle notifications
@@ -27,16 +16,18 @@ var main = function(){
 			//Check if notifications are supported
 			if(!Notification){
 				//Not supported, disable button
-				alert("Notifications are not supported in your browser");
+				alert("Notifications are not supported in your browser :(");
 				enableNotifications = false;
 				$("#notifybutton").text("Notifications not supported").prop("disabled",true);
 				return;
+			//Notifications supported, check if we need permission
 			} else if(Notification.permission !== "granted"){
 				Notification.requestPermission(function(permission){
 					if(permission === "granted"){
+						//Permitted, toggle button and start interval timer
 						$("#notifybutton").text("Stop notifying me!");
-						var n = new Notification("Hi!");
-						intervalFunc = setInterval(doNotify, 1000*5);
+						var n = new Notification("This is a sample notification!", {icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
+						intervalFunc = setInterval(notify, interval);
 					} else {
 						//Not permitted, disable button
 						enableNotifications = false;
@@ -44,23 +35,20 @@ var main = function(){
 						return;
 					}
 				});
+			//Notifications supported and already permitted
 			} else {
+				//Toggle button, start interval timer
 				$("#notifybutton").text("Stop notifying me!");
-				var n = new Notification("Hi!");
-				intervalFunc = setInterval(doNotify, 1000*5);
+				var n = new Notification("This is a sample notification!", {icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
+				intervalFunc = setInterval(notify, interval);
 			}	
 		}
 	});
 };
 
-function addItem(){
-	$("#mydiv").append($("<p>This is number " + count + "</p>"));
-	count = count + 1;
-};
-
-function doNotify(){
-	linkPrefix = "http://www.mayoclinic.org/healthy-lifestyle/adult-health/multimedia/stretching/sls-20076525?s=";
-	exercises = [
+function notify(){
+	var linkPrefix = "http://www.mayoclinic.org/healthy-lifestyle/adult-health/multimedia/stretching/sls-20076525?s=";
+	var exercises = [
 	"a shoulder stretch",
 	"an upper arm stretch",
 	"a chest stretch",
@@ -69,17 +57,19 @@ function doNotify(){
 	"a side neck stretch",
 	"a lower back stretch",
 	"a standing thigh stretch"];
-	links = ["1","2","3","4","5","6","7","8"];
+	var links = ["1","2","3","4","5","6","7","8"]; //Append to prefix
 	
-	exerciseIndex = Math.floor(Math.random()*8); //Choose a random exercise
+	var exerciseIndex = Math.floor(Math.random()*8); //Choose a random exercise
 	
 	//Create the notification
 	var notification = new Notification("Get up and stretch!",{
-		body: "Why not try a " + exercises[exerciseIndex] + "?",
+		body: "Why not try a " + exercises[exerciseIndex] + "? Click me!",
 		icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg",
-		requireInteraction: true});
+		requireInteraction: true}); //Don't automatically close
 		
 	notification.onclick = function(){
+		notification.close();
+		//Add stretch to running list
 		window.open(linkPrefix + links[exerciseIndex]);
 	};
 };
