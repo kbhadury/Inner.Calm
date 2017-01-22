@@ -33,11 +33,10 @@ var main = function(){
 				return;
 			} else if(Notification.permission !== "granted"){
 				Notification.requestPermission(function(permission){
-					var n = new Notification("yo!");
 					if(permission === "granted"){
 						$("#notifybutton").text("Stop notifying me!");
-						var n = new Notification("Hi!");
-						//intervalFunc = setInterval(doNotify, 1000*5);
+						var n = new Notification("Hi!", {body: "This is the body"});
+						intervalFunc = setInterval(doNotify, 1000*5);
 					} else {
 						//Not permitted, disable button
 						enableNotifications = false;
