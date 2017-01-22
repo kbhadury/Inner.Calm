@@ -19,7 +19,7 @@ var main = function(){
 		
 		//Disable notifications
 		if(!enableNotifications){
-			//clearInterval(intervalFunc);
+			clearInterval(intervalFunc);
 			$("#notifybutton").text("Notify me");
 		
 		//Enable notifications
