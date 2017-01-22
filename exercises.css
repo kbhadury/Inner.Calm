@@ -33,7 +33,7 @@ h3 {
 	margin: 30px;
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
   background-image: url("http://bothendsofthelead.com.au/wp-content/\
-  uploads/2014/03/French-Bulldog-Stretch.jpg");
+  uploads/2014/03/French-Bulldog-Stretch.jpg") no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-wrap: wrap;
