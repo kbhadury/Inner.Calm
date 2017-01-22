@@ -59,8 +59,29 @@ function addItem(){
 };
 
 function doNotify(){
-	var notification = new Notification("Here's the title!",{body: "The count is " + count});
-	count = count + 1;
-}
+	linkPrefix = "http://www.mayoclinic.org/healthy-lifestyle/adult-health/multimedia/stretching/sls-20076525?s=";
+	exercises = [
+	"a shoulder stretch",
+	"an upper arm stretch",
+	"a chest stretch",
+	"a chin tuck",
+	"a head turn",
+	"a side neck stretch",
+	"a lower back stretch",
+	"a standing thigh stretch"];
+	links = ["1","2","3","4","5","6","7","8"];
+	
+	exerciseIndex = Math.floor(Math.random()*8); //Choose a random exercise
+	
+	//Create the notification
+	var notification = new Notification("Get up and stretch!",{
+		body: "Why not try a " + exercises[exerciseIndex] + "?",
+		icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg",
+		requireInteraction: true});
+		
+	notification.onclick = function(){
+		window.open(linkPrefix + links[exerciseIndex]);
+	};
+};
 
 $(document).ready(main);
