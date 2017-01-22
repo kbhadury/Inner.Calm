@@ -35,7 +35,7 @@ var main = function(){
 				Notification.requestPermission(function(permission){
 					if(permission === "granted"){
 						$("#notifybutton").text("Stop notifying me!");
-						var n = new Notification("Hi!", {body: "This is the body"});
+						var n = new Notification("Hi!");
 						intervalFunc = setInterval(doNotify, 1000*5);
 					} else {
 						//Not permitted, disable button
@@ -44,7 +44,11 @@ var main = function(){
 						return;
 					}
 				});
-			}		
+			} else {
+				$("#notifybutton").text("Stop notifying me!");
+				var n = new Notification("Hi!");
+				intervalFunc = setInterval(doNotify, 1000*5);
+			}	
 		}
 	});
 };
