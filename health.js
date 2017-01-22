@@ -9,7 +9,7 @@ var main = function(){
 		//Disable notifications
 		if(!enableNotifications){
 			clearInterval(intervalFunc);
-			$("#notifybutton").text("Notify me");
+			$("#start").text("Start");
 		
 		//Enable notifications
 		} else {
@@ -18,27 +18,27 @@ var main = function(){
 				//Not supported, disable button
 				alert("Notifications are not supported in your browser :(");
 				enableNotifications = false;
-				$("#notifybutton").text("Notifications not supported").prop("disabled",true);
+				$("#start").text("Notifications not supported").prop("disabled",true);
 				return;
 			//Notifications supported, check if we need permission
 			} else if(Notification.permission !== "granted"){
 				Notification.requestPermission(function(permission){
 					if(permission === "granted"){
 						//Permitted, toggle button and start interval timer
-						$("#notifybutton").text("Stop notifying me!");
+						$("#start").text("Stop notifications");
 						var n = new Notification("This is a sample notification!", {icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
 						intervalFunc = setInterval(notify, interval);
 					} else {
 						//Not permitted, disable button
 						enableNotifications = false;
-						$("#notifybutton").text("Notifications not permitted").prop("disabled",true);
+						$("#start").text("Notifications not permitted").prop("disabled",true);
 						return;
 					}
 				});
 			//Notifications supported and already permitted
 			} else {
 				//Toggle button, start interval timer
-				$("#notifybutton").text("Stop notifying me!");
+				$("#start").text("Stop notifications");
 				var n = new Notification("This is a sample notification!", {icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
 				intervalFunc = setInterval(notify, interval);
 			}	
