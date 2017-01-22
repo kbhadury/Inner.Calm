@@ -117,7 +117,35 @@ nav ul {
 	color: lightblue;
 	cursor: pointer;
 }
+section .row img{
+	margin: 0 0 100px 5px;
+	width: 200px;
+	display: flex-wrap;
+}
 
+.col-sm-3 {
+	margin: 0 0 50px 50px;
+	display: flex-wrap;
+}
+
+.exercises{
+	padding: 5px 30 0 0px;
+    display: flex;
+}
+
+
+.table
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	border: none;
+}
+
+.table img{
+	width: 200px;
+	height: 200px;
+}
 
 #footer{
   font-size: 0.75rem;
