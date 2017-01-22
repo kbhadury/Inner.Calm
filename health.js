@@ -70,6 +70,7 @@ function notify(){
 	notification.onclick = function(){
 		notification.close();
 		//Add stretch to running list
+		$(".list").prepend($("<li>You completed " + exercises[exerciseIndex] + "!</li>"));
 		window.open(linkPrefix + links[exerciseIndex]);
 	};
 };
