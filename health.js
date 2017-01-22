@@ -70,7 +70,17 @@ function notify(){
 	notification.onclick = function(){
 		notification.close();
 		//Add stretch to running list
-		$(".list").prepend($("<li>You completed " + exercises[exerciseIndex] + "!</li>"));
+		var hrs = getHours();
+		var ampm = am;
+		if(hrs >= 12){
+			hrs = hrs-12;
+			ampm = pm;
+		}
+		if(hrs == 0){
+			hrs = 12;
+		}
+		var completedStr = "<li>" + hrs + ":" + getMinutes() + " " + ampm + "  You completed " + exercises[exerciseIndex] + "!</li>";
+		$(".list").prepend($(completedStr));
 		window.open(linkPrefix + links[exerciseIndex]);
 	};
 };
