@@ -2,6 +2,9 @@ body {
 	height: 100%;
 	margin: 0;
 	width: 100%;
+	background-image: url('http://media.istockphoto.com/photos/\
+	abstract-blue-watercolor-background-picture-id521308788?k=6&m=521308788&s=170667a&w=0&h=AdS3TeiaOypEmm_0fCXswwSdQdJIrPJnA-Qa9J7PbO4=');
+	background-size: cover;
 }
 
 h1 {
