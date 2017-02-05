@@ -1,7 +1,7 @@
 var main = function(){
 	
 	var enableNotifications = false; //Disable notifications until user presses "start"
-	var interval = 1000*5; //Currently set to 5 seconds for testing
+	var interval = 1000*60*20; //Notify every 20 minutes
 	
 	$("#notifybutton").click(function(){
 		enableNotifications = !enableNotifications; //Toggle notifications
@@ -39,7 +39,9 @@ var main = function(){
 			} else {
 				//Toggle button, start interval timer
 				$("#start").text("Stop notifications");
-				var n = new Notification("This is a sample notification!", {icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
+				var n = new Notification("This is a sample notification!", {
+					icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg",
+					body: "You'll be asked to get up and stretch every 20 minutes"});
 				intervalFunc = setInterval(notify, interval);
 			}	
 		}
