@@ -146,7 +146,9 @@ section .row img{
 	width: 200px;
 	height: 200px;
 }
-
+footer {
+	
+}
 #footer{
-  font-size: 0.25rem;
+  font-size: 0.75rem;
 }
