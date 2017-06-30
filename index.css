@@ -146,9 +146,24 @@ section .row img{
 	width: 200px;
 	height: 200px;
 }
-footer {
-	
+
+.listbox{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 20%;
+	height: 90%;
+	z-index: 2;
+	border: 5px solid #069dc6;
+	text-align: center;
+	overflow: auto;
 }
+
+.listitem{
+	margin: 10px;
+	background-color: #82d4ec;
+}
+
 #footer{
   font-size: 0.75rem;
 }
