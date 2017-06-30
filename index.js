@@ -22,7 +22,8 @@ var congrats = [
 var main = function(){
 	
 	var enableNotifications = false; //Disable notifications until user presses "start"
-	var interval = 1000*60*20; //Notify every 20 minutes
+	//var interval = 1000*60*20; //Notify every 20 minutes
+	var interval = 1000*5; //Testing
 	
 	$("#notifybutton").click(function(){
 		enableNotifications = !enableNotifications; //Toggle notifications
@@ -122,6 +123,7 @@ function notify(){
 		listCount = listCount + 1;
 		$("#numCompleted").html("<b>Completed exercises: " + listCount + "</b>");
 		
+		/*
 		//Say congrats every 5 stretches (100 mins)
 		if(listCount % 5 == 0){
 			var congratsIndex = Math.floor(Math.random()*4);
@@ -129,6 +131,7 @@ function notify(){
 				body: "You've completed " + listCount + " exercises!",
 				icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
 		}
+		*/
 		
 		window.open(linkPrefix + links[exerciseIndex]);
 	};
