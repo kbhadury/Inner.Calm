@@ -1,3 +1,24 @@
+var listCount = 0;
+
+var linkPrefix = "http://www.mayoclinic.org/healthy-lifestyle/adult-health/multimedia/stretching/sls-20076525?s=";
+var exercises = [
+	"a shoulder stretch",
+	"an upper arm stretch",
+	"a chest stretch",
+	"a chin tuck",
+	"a head turn",
+	"a side neck stretch",
+	"a lower back stretch",
+	"a standing thigh stretch"];
+var links = ["1","2","3","4","5","6","7","8"]; //Append to prefix
+
+var congrats = [
+	"Nice job!",
+	"Way to go!",
+	"Keep it up!",
+	"Looking good!"];
+
+
 var main = function(){
 	
 	var enableNotifications = false; //Disable notifications until user presses "start"
@@ -13,6 +34,7 @@ var main = function(){
 		
 		//Enable notifications
 		} else {
+			
 			//Check if notifications are supported
 			if(!Notification){
 				//Not supported, disable button
@@ -20,13 +42,22 @@ var main = function(){
 				enableNotifications = false;
 				$("#start").text("Notifications not supported").prop("disabled",true);
 				return;
-			//Notifications supported, check if we need permission
+			
+			//Notifications are supported, check if we need permission
 			} else if(Notification.permission !== "granted"){
 				Notification.requestPermission(function(permission){
 					if(permission === "granted"){
 						//Permitted, toggle button and start interval timer
 						$("#start").text("Stop notifications");
-						var n = new Notification("This is a sample notification!", {icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
+						var n = new Notification("This is a sample notification!", {
+							icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg",
+							body: "You'll be asked to get up and stretch every 20 minutes"});
+						var n2 = new Notification("Please do not close the webpage", {
+							icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg",
+							body: "Otherwise you will not be able to receive notifications"});
+						$(".list").empty();
+						listCount = 0
+						$("#numCompleted").html("<b>Completed exercises: 0</b>");
 						intervalFunc = setInterval(notify, interval);
 					} else {
 						//Not permitted, disable button
@@ -35,13 +66,20 @@ var main = function(){
 						return;
 					}
 				});
-			//Notifications supported and already permitted
+			
+			//Notifications are supported and already permitted
 			} else {
 				//Toggle button, start interval timer
 				$("#start").text("Stop notifications");
 				var n = new Notification("This is a sample notification!", {
 					icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg",
 					body: "You'll be asked to get up and stretch every 20 minutes"});
+				var n2 = new Notification("Please do not close the webpage", {
+							icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg",
+							body: "Otherwise you will not be able to receive notifications"});
+				$(".list").empty();
+				listCount = 0;
+				$("#numCompleted").html("<b>Completed exercises: 0</b>");
 				intervalFunc = setInterval(notify, interval);
 			}	
 		}
@@ -49,19 +87,8 @@ var main = function(){
 };
 
 function notify(){
-	var linkPrefix = "http://www.mayoclinic.org/healthy-lifestyle/adult-health/multimedia/stretching/sls-20076525?s=";
-	var exercises = [
-	"a shoulder stretch",
-	"an upper arm stretch",
-	"a chest stretch",
-	"a chin tuck",
-	"a head turn",
-	"a side neck stretch",
-	"a lower back stretch",
-	"a standing thigh stretch"];
-	var links = ["1","2","3","4","5","6","7","8"]; //Append to prefix
-	
-	var exerciseIndex = Math.floor(Math.random()*8); //Choose a random exercise
+	//Choose a random exercise
+	var exerciseIndex = Math.floor(Math.random()*8);
 	
 	//Create the notification
 	var notification = new Notification("Get up and stretch!",{
@@ -71,19 +98,38 @@ function notify(){
 		
 	notification.onclick = function(){
 		notification.close();
-		//Add stretch to running list
+		
+		//Get current time
 		var date = new Date();
 		var hrs = date.getHours();
-		var ampm = "am";
+		var mins = date.getMinutes();
+		var ampm = " am";
+		
+		//Convert from 24-hr time to 12-hr time
 		if(hrs >= 12){
-			hrs = hrs-12;
-			ampm = "pm";
+			ampm = " pm";
+			hrs = hrs - 12;
 		}
-		if(hrs == 0){
-			hrs = 12;
+		
+		//Format minutes
+		if(mins < 10){
+			mins = "0" + mins;
 		}
-		var completedStr = "<li>" + hrs + ":" + date.getMinutes() + ampm + " - You completed " + exercises[exerciseIndex] + "!</li>";
-		$(".list").prepend($(completedStr));
+		
+		//Add completed stretch to list
+		var completedItem = "<div class='listitem'>" + hrs + ":" + mins + ampm + " - You completed " + exercises[exerciseIndex] + "!</div>";
+		$(".list").prepend($(completedItem));
+		listCount = listCount + 1;
+		$("#numCompleted").html("<b>Completed exercises: " + listCount + "</b>");
+		
+		//Say congrats every 5 stretches (100 mins)
+		if(listCount % 5 == 0){
+			var congratsIndex = Math.floor(Math.random()*4);
+			var notification = new Notification(congrats[congratsIndex],{
+				body: "You've completed " + listCount + " exercises!",
+				icon: "http://worldartsme.com/images/meditating-buddha-clipart-1.jpg"});
+		}
+		
 		window.open(linkPrefix + links[exerciseIndex]);
 	};
 };
