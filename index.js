@@ -108,6 +108,8 @@ function notify(){
 		//Convert from 24-hr time to 12-hr time
 		if(hrs >= 12){
 			ampm = " pm";
+		}
+		if(hrs > 12){
 			hrs = hrs - 12;
 		}
 		
@@ -134,4 +136,10 @@ function notify(){
 	};
 };
 
+//Let's go!
 $(document).ready(main);
+
+//Ask the user before leaving the page
+$(window).bind('beforeunload', function(){
+  return 'Are you sure you want to leave?';
+});
